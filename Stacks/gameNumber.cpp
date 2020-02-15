@@ -19,6 +19,7 @@ void display(int stack2[])
 {
     for(int i=0;i<=top;i++)
     {
+        if(stack2[i] != 0)
         cout<<stack2[i]<<" ";
     }
 }

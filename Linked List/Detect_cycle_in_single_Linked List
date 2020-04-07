@@ -1,0 +1,118 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*head,*p;
+void get_data(int n)
+{
+    int element;
+    cout<<"enter the data in 1st node ";
+    cin>>element;
+    node *temp=new node();
+    temp->data=element;
+    temp->next=NULL;
+    if(temp!=NULL)
+    {
+        head=temp;
+        p=temp;
+        for(int i=2;i<=n;i++)
+        {
+            cout<<"enter the element in "<<i<<" node :";
+            cin>>element;
+            node *temp=new node();
+            temp->data=element;
+            temp->next=NULL;
+            p->next=temp;
+            p=p->next;
+        }
+    }
+    else
+    {
+        exit(0);
+    }
+}
+bool detect_loop(node *head,node *pos_data)
+{
+    p->next=pos_data;
+    p=pos_data;
+    node *slow,*fast;
+    slow=head;
+    fast=head;
+    while((slow!=NULL && fast!=NULL && fast->next!=NULL))
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+        if(slow==fast)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+void show_data()
+{
+    node *temp=head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+node *find_position(node *head,int pos)
+{
+    int count=0;
+    while(head!=NULL)
+    {
+        if(count==pos)
+        {
+            return head;
+        }
+        head=head->next;
+        count++;
+    }
+}
+int main()
+{
+    cout<<"Single Linked List Representation:\n";
+    int n;
+    cout<<"enter the size of linked list:";
+    cin>>n;
+    get_data(n);
+    int ch;
+    while(1)
+    {
+        cout<<"enter the choice:\n";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+            {
+                show_data();
+                break;
+            }
+            case 2:
+            {
+                int pos;
+                cout<<"enter the position of node (for which you want) to link with the last node";
+                cin>>pos;
+                node *pos_data=find_position(head,pos);
+                if(detect_loop(head,pos_data))
+                {
+                    cout<<"loop found\n";
+                }
+                else
+                {
+                    cout<<"loop not found\n";
+                }
+                
+                break;
+            }
+            case 3:
+            {
+                exit(0);
+            }
+        }
+    }
+}
